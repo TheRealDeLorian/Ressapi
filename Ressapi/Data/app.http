@@ -10,6 +10,10 @@ Content-type: application/json
   "name": "Cookies",
   "instructions": "Bake them",
   "ingredients": [
-    
+    {
+      "name:Chocolate",
+      "quantity": 15,
+      "unit": "25# Bags"
+    }
   ]
 }

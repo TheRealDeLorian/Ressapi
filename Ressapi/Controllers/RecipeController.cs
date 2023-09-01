@@ -22,21 +22,21 @@ namespace Ressapi.Controllers
         }
 
         [HttpGet()]
-        public IEnumerable<Recipe> Get()
+        public async Task<IEnumerable<Recipe>> Get()
         {
-            return dataStore.GetAllRecipes();
+            return await dataStore.GetAllRecipes();
         }
 
         [HttpGet("{id}")]
-        public Recipe Get(int id)
+        public Task<Recipe> Get(int id)
         {
             return dataStore.GetRecipe(id);
         }
 
         [HttpPost]
-        public Recipe Post([FromBody] Recipe recipe)
+        public async Task<Recipe> Post([FromBody] Recipe recipe)
         {
-            var newRecipe = dataStore.AddRecipe(recipe);
+            var newRecipe = await dataStore.AddRecipe(recipe);
             return newRecipe;
         }
     }

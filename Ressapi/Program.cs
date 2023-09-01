@@ -10,7 +10,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddSingleton<IDataStore, InMemoryDataStore>();
+builder.Services.AddSingleton<IDataStore, JsonDataStore>(); //this doesnt matter if it's json or in memory, it just needs something to know where to store. 
 builder.Services.AddCors(options => {
     options.AddDefaultPolicy(cfg => {
         cfg.WithOrigins(builder.Configuration["AllowedOrigins"]);
