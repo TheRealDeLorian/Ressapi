@@ -6,10 +6,11 @@ public class JsonDataStore : IDataStore
 {
     List<Recipe> recipes;
     string recipesPath = "recipes.json";
+
     public JsonDataStore()
     {
-        recipes = new List<Recipe>();
-        if(File.Exists(recipesPath))
+        recipes = new();
+        if (File.Exists(recipesPath))
         {
             var json = File.ReadAllText(recipesPath);
             recipes = JsonSerializer.Deserialize<List<Recipe>>(json);
@@ -18,7 +19,7 @@ public class JsonDataStore : IDataStore
 
     public async Task<Recipe> AddRecipe(Recipe recipe)
     {
-        if(recipes.Count == 0)
+        if (recipes.Count == 0)
         {
             recipe.Id = 1;
         }
@@ -26,8 +27,8 @@ public class JsonDataStore : IDataStore
         {
             recipe.Id = recipes.Max(r => r.Id) + 1;
         }
-        recipes.Add(recipe);
 
+        recipes.Add(recipe);
         await saveRecipes();
         return recipe;
     }
@@ -43,9 +44,10 @@ public class JsonDataStore : IDataStore
         throw new NotImplementedException();
     }
 
-    public Task<IEnumerable<Recipe>> GetAllRecipes()
+    public async Task<IEnumerable<Recipe>> GetAllRecipes()
     {
-        throw new NotImplementedException();
+        await Task.CompletedTask;
+        return recipes;
     }
 
     public Task<Recipe> GetRecipe(int id)
