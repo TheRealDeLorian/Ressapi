@@ -5,6 +5,9 @@ namespace Ressapi.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    //[HttpGet(Name = "GetRecipes")]
+    //[ResponseCache(Location = ResponseCacheLocation.Any, Duration = 60)]
+
 
     public class RecipeController : ControllerBase
     {
@@ -13,6 +16,7 @@ namespace Ressapi.Controllers
 
         public RecipeController(ILogger<RecipeController> logger, IDataStore dataStore)
         {
+           
             _logger = logger;
             this.dataStore = dataStore;
         }

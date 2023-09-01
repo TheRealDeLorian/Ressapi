@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Mvc;
 using Ressapi.Data;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -35,10 +36,25 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 // Minimal API
-app.MapGet("/error", [EnableCors("AnyOrigin")] () =>
+app.MapGet("/error", [EnableCors("AnyOrigin")]  //you need to add this before authorization or controllers because it has to do with those
+[ResponseCache(NoStore = true)] () =>
     Results.Problem());
-app.MapGet("/error/test", [EnableCors("AnyOrigin")] () =>
-{ throw new Exception("test"); });                               //you need to add this before authorization or controllers because it has to do with those
+app.MapGet("/error/test", [EnableCors("AnyOrigin")]
+[ResponseCache(NoStore = true)] () =>
+{ throw new Exception("test"); });
+
+app.MapGet("/cod/test",
+    [EnableCors("AnyOrigin")]
+[ResponseCache(NoStore = true)] () =>
+    Results.Text("<script>" +
+        "window.alert('Your client supports JavaScript!" +
+        "\\r\\n\\r\\n" +
+        $"Server time (UTC): {DateTime.UtcNow.ToString("o")}" +
+        "\\r\\n" +
+        "Client time (UTC): ' + new Date().toISOString());" +
+        "</script>" +
+        "<noscript>Your client does not support JavaScript</noscript>",
+        "text/html"));
 
 app.UseAuthorization();
 

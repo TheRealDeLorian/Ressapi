@@ -13,23 +13,34 @@
     {
         private List<Recipe> recipes = new List<Recipe>();
 
-        Recipe GetRecipe(int id)
+        public Recipe AddRecipe(Recipe recipe)
         {
-            return recipes[id];
-        }
-        Recipe AddRecipe(Recipe recipe)
-        {
+            if (recipe.Id == 0)
+            {
+                recipe.Id = recipes.Count + 1; //If a recipe doesn't have a set ID it will default to the last in the list
+            }
             recipes.Add(recipe);
             return recipe;
         }
-
-        Recipe DeleteRecipe(int id)
+        public void DeleteRecipe(int id)
         {
-            recipes.Remove();
+            recipes.RemoveAll(r => r.Id == id);
         }
-        Recipe UpdateRecipe(Recipe recipe)
-        {
 
+        public IEnumerable<Recipe> GetAllRecipes()
+        {
+            return recipes;
+        }
+
+        public Recipe GetRecipe(int id)
+        {
+            return recipes.FirstOrDefault(r => r.Id == id);
+        }
+
+        public Recipe UpdateRecipe(Recipe recipe)
+        {
+            DeleteRecipe(recipe.Id);
+            return AddRecipe(recipe);
         }
     }
 
